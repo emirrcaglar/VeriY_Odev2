@@ -1,0 +1,75 @@
+std::string Tree::levelOrder() { // public level-order traversal with string output
+    if (root == nullptr) return "Tree is empty";
+
+    Node* queue[100]; // assuming the tree won't have more than 100 nodes
+    int front = 0, rear = 0;
+    std::string result; // to hold the queue string output
+
+    queue[rear++] = root;
+
+    while (front < rear) {
+        int nodeCount = rear - front;
+        while (nodeCount > 0) {
+            Node* current = queue[front++];
+
+            if (current != nullptr) {
+                result += std::to_string(current->data) + " "; // append current node's data
+                queue[rear++] = current->left;                // enqueue left child (can be nullptr)
+                queue[rear++] = current->right;               // enqueue right child (can be nullptr)
+            }
+            if(current->left == nullptr || current->right == nullptr) {
+                result += "null "; // placeholder for empty nodes
+            }else if(current == nullptr){
+                result += "null ";
+                result += "null ";
+            }
+            nodeCount--;
+        }
+    }
+
+    // Remove trailing space from result (optional)
+    if (!result.empty() && result.back() == ' ') {
+        result.pop_back();
+    }
+
+    return result;
+}
+
+
+
+
+
+
+
+std::string Tree::levelOrder() { // public level-order traversal with string output
+    if (root == nullptr) return "Tree is empty";
+
+    Node* queue[100]; // assuming the tree won't have more than 100 nodes
+    int front = 0, rear = 0;
+    std::string result; // to hold the queue string output
+
+    queue[rear++] = root;
+
+    while (front < rear) {
+        int nodeCount = rear - front;
+        while (nodeCount > 0) {
+            Node* current = queue[front++];
+
+            if (current != nullptr) {
+                result += std::to_string(current->data) + " "; // append current node's data
+                queue[rear++] = current->left;                // enqueue left child (can be nullptr)
+                queue[rear++] = current->right;               // enqueue right child (can be nullptr)
+            } else {
+                result += "null "; // placeholder for empty nodes
+            }
+            nodeCount--;
+        }
+    }
+
+    // Remove trailing space from result (optional)
+    if (!result.empty() && result.back() == ' ') {
+        result.pop_back();
+    }
+
+    return result;
+}
