@@ -39,6 +39,21 @@ void Tree::insert(char data) {
     }
 }
 
+void Tree::deleteTree(int index) {
+    if (index >= MAX || state[index] == EMPTY) {
+        return;
+    }
+
+    if(index > height(0)) {
+        return;
+    }
+
+    deleteTree(left(index));
+    deleteTree(right(index));
+
+    state[index] = EMPTY;
+    cells[index] = 0;
+}
 
 
 int Tree::left(int index)
@@ -114,12 +129,7 @@ void printSpaces(std::ostream& os, char ch, int count) {
         os << ch;
     }
 }
-
-
-
-// 1, 2, 4, 8, 16, 32, 64, 128, 256, 512
-
-
+/*
 std::ostream& operator<<(std::ostream& os, Tree& tree) {
     int height = tree.height(0); // Maximum height of the tree
 
@@ -141,4 +151,26 @@ std::ostream& operator<<(std::ostream& os, Tree& tree) {
         os << std::endl << std::endl; // Padding for the next level
     }
     return os;
+}
+*/
+void Tree::printTree() {
+    int treeHeight = height(0);
+
+    for (int level = 0; level <= treeHeight; ++level) {
+        int levelStart = (1 << level) - 1;     
+        int levelEnd = (1 << (level + 1)) - 2; 
+        int space = (1 << (treeHeight - level + 2));   
+
+        std::cout << std::setw(space/2); 
+        for (int i = levelStart; i <= levelEnd; ++i) {
+            if (i < MAX && state[i] != EMPTY) {
+                std::cout << static_cast<char>(cells[i]); 
+            } else {
+                std::cout << "_"; 
+            }
+            std::cout << std::setw(space);            
+        }
+        std::cout << std::endl << std::endl;
+        std::cout << std::endl << std::endl;
+    }
 }

@@ -31,7 +31,8 @@ public:
     void insert(char data);
     int height(int index);
     int treeValue(int index);
-
+    void printTree();
+    void deleteTree(int index);
 };
 
 #endif
