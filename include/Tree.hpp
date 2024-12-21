@@ -15,6 +15,7 @@ private:
     bool isFull(int index);
     bool isFullRight(int index); 
     bool isFullLeft(int index);
+    int treeValue(int index, bool isLeft);
 
 
 public:
@@ -29,6 +30,8 @@ public:
     friend std::ostream& operator<<(std::ostream& os, Tree& tree);
     void insert(char data);
     int height(int index);
+    int treeValue(int index);
+
 };
 
 #endif

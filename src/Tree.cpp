@@ -78,6 +78,25 @@ bool Tree::isFullLeft(int index)
     return false;
 }
 
+int Tree::treeValue(int index) {
+    return treeValue(index, false);
+}
+
+int Tree::treeValue(int index, bool isLeft = false) {
+    // Base case: if the index is out of bounds or the node is empty
+    if (index >= MAX || state[index] == EMPTY) {
+        return 0;
+    }
+
+    // Multiply the current node value based on its position (left/right child)
+    int value = cells[index] * (isLeft ? 2 : 1);
+
+    // Recursively calculate for left and right children
+    value += treeValue(left(index), true);   // Left child contributes double
+    value += treeValue(right(index), false); // Right child contributes single
+
+    return value;
+}
 
 
 int Tree::height(int index) 

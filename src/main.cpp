@@ -4,6 +4,12 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <cstdint>
+#include <conio.h>
+
+    void createCells(int cellCount, Tree trees[]);
+    void pointToCells(int space);
+
 
 int main() {
 
@@ -31,10 +37,17 @@ int main() {
 
     while (true) {
         system("CLS"); // Clear the screen (for Windows)
+        std::cout << "TREE VALUE: " << std::endl << trees[i].treeValue(0) << std::endl;
+        
+        createCells(treeCount, trees);
+        pointToCells(i);
+        std::cout << std::endl;
         std::cout << "Tree " << i << ":\n" << trees[i] << std::endl << std::endl;
 
         std::cout << "Enter 'a' to move left, 'd' to move right, 's' to exit: ";
-        std::cin >> secim;
+        
+        // Use _getch() to get a single character input without waiting for Enter
+        secim = _getch();
 
         if (secim == 's') {
             break; // Exit the loop
@@ -55,7 +68,85 @@ int main() {
         }
     }
 
-
     file.close();
     return 0;
+}
+
+void pointToCells(int space) {
+
+/*  
+    if(space > 9){
+        space -= space %= 10;
+    }
+*/
+
+    for(int i = 0; i < space; i++){
+        std::cout << "               ";
+    }
+    std::cout << "^^^^^^^^^^^^   ";
+    std::cout << std::endl;
+    for(int i = 0; i < space; i++){
+        std::cout << "               ";
+    }
+    std::cout << "||||||||||||   ";
+}
+
+void fillCells(int i, Tree trees[]) {
+    std::cout << trees[i].treeValue(0);
+}
+
+void createCells(int cellCount, Tree trees[]) {
+/*
+    if(cellCount > 9){
+        cellCount -= cellCount % 10;
+    }        
+*/
+
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "............   "; 
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "." << std::setw(10);
+        std::cout << reinterpret_cast<std::uintptr_t>(&trees[i])%1000;
+        std::cout << ".   ";
+        // fillCells(i);
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "............   "; 
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "............   "; 
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "." << std::setw(10);
+        std::cout << trees[i].treeValue(0);
+        std::cout << ".   "; 
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "............   "; 
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "............   "; 
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "." << std::setw(10);
+        if(i+1 < cellCount){
+            std::cout << reinterpret_cast<std::uintptr_t>(&trees[i+1])%1000;
+        } else{
+            std::cout << "0";
+        }
+        std::cout << ".   ";
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < cellCount; i++){
+        std::cout << "............   "; 
+    }
+        std::cout << std::endl;
 }
