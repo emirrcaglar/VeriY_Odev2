@@ -32,6 +32,7 @@ public:
     int height(int index);
     int treeValue(int index);
     void printTree();
+    void mirrorPrint();
     void deleteTree(int index);
 };
 

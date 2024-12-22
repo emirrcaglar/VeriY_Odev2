@@ -41,17 +41,33 @@ int main() {
         
         system("CLS"); // Clear the screen (for Windows)
 
-        int pageStartIndex = (i / MAX_TREES_ON_SCREEN) * MAX_TREES_ON_SCREEN;   // the index of the first tree on the current page
-        int cellCount = std::min(MAX_TREES_ON_SCREEN, treeCount - pageStartIndex);  // the number of cells to show
-        createCells(cellCount, trees + pageStartIndex, TOTAL_TREE_COUNT, pageStartIndex); // the cells that show the tree values 
+        int startIndex = (i / MAX_TREES_ON_SCREEN) * MAX_TREES_ON_SCREEN;
+        int cellCount = std::min(MAX_TREES_ON_SCREEN, treeCount - startIndex);
+        createCells(cellCount, trees + startIndex, TOTAL_TREE_COUNT, startIndex);  // Pass startIndex here
         pointToCells(i % MAX_TREES_ON_SCREEN); // the arrows that show the current tree
         std::cout << std::endl;
 
-        trees[i].printTree(); // Print the current tree
+        bool isMirrored;
+        if(secim != 'w') { 
+            trees[i].printTree();
+        } else if(secim == 'w'){
+            if(isMirrored) { // if the tree is already mirrored, print the tree
+                trees[i].printTree();
+                isMirrored = false;
+                std::cout << "Tree is not mirrored.\n";
+            } else { // if the tree is not mirrored, mirror the tree and print it
+                trees[i].mirrorPrint();
+                isMirrored = true;
+                std::cout << "Tree is mirrored.\n";
+            }
+        }
 
-        std::cout << "Enter 'a' to move left, 'd' to move right, 's' to delete, 'q' to exit: ";
+        std::cout << "Enter 'a' to move left, 'd' to move right, 'w' to mirror the tree , 's' to delete, 'q' to exit: ";
+
         // Use _getch() to get a single character input without waiting for Enter
         secim = _getch();
+
+        // std::cin >> secim;
 
         if (secim == 'q') {
             break; // Exit the loop
@@ -139,10 +155,11 @@ void createCells(int treeCount, Tree trees[], int const TOTAL_TREE_COUNT, int pa
         std::cout << "............   ";
     }
     std::cout << std::endl;
-    for (int i = 0; i < treeCount; i++) {
+    for(int i = 0; i < treeCount; i++) {
         std::cout << "." << std::setw(10);
-        if (pageStartIndex + i + 1 < TOTAL_TREE_COUNT) {
-            std::cout << reinterpret_cast<std::uintptr_t>(&trees[i + 1]) % 1000;
+        
+        if(pageStartIndex + i + 1 < TOTAL_TREE_COUNT) {
+            std::cout << reinterpret_cast<std::uintptr_t>(&trees[i+1])%1000;
         } else {
             std::cout << "0";
         }
