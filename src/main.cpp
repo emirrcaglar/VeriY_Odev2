@@ -11,8 +11,10 @@ void createCells(int treeCount, Tree trees[], int const TOTAL_TREE_COUNT, int pa
 void pointToCells(int space);
 int const MAX_TREES_ON_SCREEN = 10;
 
+std::ifstream file("Agaclar.txt");
+
+
 int main() {
-    std::ifstream file("Agaclar.txt");
     if (!file) {
         std::cerr << "Agaclar.txt isimli dosya acilamadi...";
         return 1;
