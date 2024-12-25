@@ -14,7 +14,7 @@ int const MAX_TREES_ON_SCREEN = 10;
 int main() {
     std::ifstream file("Agaclar.txt");
     if (!file) {
-        std::cerr << "Unable to open file Agaclar.txt";
+        std::cerr << "Agaclar.txt isimli dosya acilamadi...";
         return 1;
     }
     const int MAX_TREES = 100; // Maximum number of trees
@@ -34,7 +34,7 @@ int main() {
         treeCount++;
     }
     int const TOTAL_TREE_COUNT = treeCount;
-    char secim;
+    char choice;
     int i = 0; // Move `i` outside the loop to keep track of the current tree
 
     while (true) {
@@ -48,9 +48,9 @@ int main() {
         std::cout << std::endl;
 
         bool isMirrored;
-        if(secim != 'w') { 
+        if(choice != 'w') { 
             trees[i].printTree();
-        } else if(secim == 'w'){
+        } else if(choice == 'w'){
             if(isMirrored) { // if the tree is already mirrored, print the tree
                 trees[i].printTree();
                 isMirrored = false;
@@ -62,28 +62,28 @@ int main() {
             }
         }
 
-        std::cout << "Enter 'a' to move left, 'd' to move right, 'w' to mirror the tree , 's' to delete, 'q' to exit: ";
+        std::cout << "Sola gitmek icin 'a', saga gitmek icin 'd', agaci aynalamak icin 'w', silmek icin 's', cikis icin 'q': ";
 
         // Use _getch() to get a single character input without waiting for Enter
-        secim = _getch();
+        // choice = _getch();
 
-        // std::cin >> secim;
+        std::cin >> choice;
 
-        if (secim == 'q') {
+        if (choice == 'q') {
             break; // Exit the loop
-        } else if (secim == 'a') {
+        } else if (choice == 'a') {
             if (i > 0) {
                 i--; // Move to the previous tree
             } else {
-                std::cout << "Already at the first tree.\n";
+                std::cout << "Zaten ilk agactasiniz.\n";
             }
-        } else if (secim == 'd') {
+        } else if (choice == 'd') {
             if (i < treeCount - 1) { // Ensure `i` doesn't exceed the last index
                 i++; // Move to the next tree
             } else {
-                std::cout << "Already at the last tree.\n";
+                std::cout << "Zaten son agactasiniz.\n";
             }
-        } else if (secim == 's') { // deletion
+        } else if (choice == 's') { // deletion
             if (treeCount > 0) {
                 trees[i].deleteTree(0); // Delete the current tree                
                 for(int j = i; j < treeCount - 1; j++) {
@@ -96,12 +96,12 @@ int main() {
                 if(i < 0) {
                     i = 0; // Move to the first tree
                 }
-                std::cout << "Tree deleted.\n";
+                std::cout << "Agac silindi.\n";
             } else {
-                std::cout << "No trees to delete.\n";
+                std::cout << "Silinecek agac yok.\n";
             }
         } else {
-            std::cout << "Invalid input. Please enter 'a', 'd', 's', or 'q'.\n";
+            std::cout << "Gecersiz karakter. Lutfen gecerli bir karakter giriniz: 'a', 'd', 's', 'q'.\n";
         }
     }
 
@@ -119,7 +119,7 @@ void pointToCells(int space) {
     for (int i = 0; i < space; i++) {
         std::cout << "               ";
     }
-    std::cout << "||||||||||||   ";
+    std::cout << "||||||||||||   \n";
 }
 
 void createCells(int treeCount, Tree trees[], int const TOTAL_TREE_COUNT, int pageStartIndex) {
